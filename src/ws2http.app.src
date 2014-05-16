@@ -1,0 +1,8 @@
+{application, ws2http, [
+    {description, ""},
+    {vsn, "1"},
+    {registered, []},
+    {applications, [kernel,stdlib,crypto,cowboy,compiler,lager,syntax_tools,inets]},
+    {mod, { ws2http_app, []}},
+    {env, []}
+]}.

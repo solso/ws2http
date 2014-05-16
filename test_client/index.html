@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script type="text/javascript">
+var ws = new Object;
+
+function send() {
+  
+    var word = document.getElementById('search').value;
+    
+    if (word!=undefined && word.length>0) {
+      console.log('sent', word);
+      ws.send(word);
+    }
+    
+}
+
+function open_conn() {
+    if (!("WebSocket" in window)) {
+        alert("WebSocket NOT supported by your Browser!");
+        return;
+    }
+    
+    ws = new WebSocket("ws://127.0.0.1:8090");
+    ws.onopen = function() {
+        console.log('connected');        
+    };
+    ws.onmessage = function (event) {
+        var received_msg = event.data;
+        var txt = document.createTextNode(received_msg);
+        document.getElementById('message').appendChild(txt);
+    };
+    ws.onclose = function() {
+        console.log('close');
+    };
+}
+</script>
+</head>
+<body>
+<h2>Testing the conversion from WS to HTTP</h2>  
+<div>
+   <p><a href="javascript:open_conn()">Create WS connection</a><br/>
+   
+   <p><input id="search" type="text" onkeypress="send()">
+</div>
+
+<p>Time (in ms):
+<div id="times">
+  
+</div>
+<p>Last Response:
+   
+<div id="message">
+</div>
+</body>
+</html>
